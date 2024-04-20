@@ -83,6 +83,7 @@ export interface ComponentsOpenHour extends Schema.Component {
   info: {
     displayName: 'OpenHour';
     icon: 'clock';
+    description: '';
   };
   attributes: {
     title: Attribute.String;
@@ -92,6 +93,7 @@ export interface ComponentsOpenHour extends Schema.Component {
       'oneToOne',
       'api::openning-hour.openning-hour'
     >;
+    background: Attribute.Media;
   };
 }
 

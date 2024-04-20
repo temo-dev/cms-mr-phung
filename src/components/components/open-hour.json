@@ -2,7 +2,8 @@
   "collectionName": "components_components_open_hours",
   "info": {
     "displayName": "OpenHour",
-    "icon": "clock"
+    "icon": "clock",
+    "description": ""
   },
   "options": {},
   "attributes": {
@@ -16,6 +17,16 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::openning-hour.openning-hour"
+    },
+    "background": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": false
     }
   }
 }
