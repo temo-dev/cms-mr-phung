@@ -1,21 +1,21 @@
 {
-  "collectionName": "components_components_foods",
+  "collectionName": "components_components_hero01s",
   "info": {
-    "displayName": "food",
-    "icon": "seed"
+    "displayName": "Hero01",
+    "icon": "apps"
   },
   "options": {},
   "attributes": {
-    "name": {
+    "title": {
+      "type": "string"
+    },
+    "subtitle": {
       "type": "string"
     },
     "description": {
       "type": "text"
     },
-    "price": {
-      "type": "decimal"
-    },
-    "image": {
+    "background": {
       "allowedTypes": [
         "images",
         "files",
@@ -23,10 +23,7 @@
         "audios"
       ],
       "type": "media",
-      "multiple": true
-    },
-    "status": {
-      "type": "string"
+      "multiple": false
     }
   }
 }

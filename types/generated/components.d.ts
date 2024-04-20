@@ -1,37 +1,123 @@
 import type { Schema, Attribute } from '@strapi/strapi';
 
-export interface ComponentsButton extends Schema.Component {
-  collectionName: 'components_components_buttons';
+export interface ComponentsAboutChef extends Schema.Component {
+  collectionName: 'components_components_about_chefs';
   info: {
-    displayName: 'Button';
-    icon: 'cursor';
+    displayName: 'AboutChef';
+    icon: 'feather';
   };
   attributes: {
-    name: Attribute.String;
-    color: Attribute.Enumeration<['primary', 'warning', 'success']>;
+    title: Attribute.String;
+    subtitle: Attribute.String;
+    content: Attribute.Blocks;
+    image: Attribute.Media;
   };
 }
 
-export interface ComponentsFood extends Schema.Component {
-  collectionName: 'components_components_foods';
+export interface ComponentsHero01 extends Schema.Component {
+  collectionName: 'components_components_hero01s';
   info: {
-    displayName: 'food';
-    icon: 'seed';
+    displayName: 'Hero01';
+    icon: 'apps';
   };
   attributes: {
-    name: Attribute.String;
+    title: Attribute.String;
+    subtitle: Attribute.String;
     description: Attribute.Text;
-    price: Attribute.Decimal;
-    image: Attribute.Media;
-    status: Attribute.String;
+    background: Attribute.Media;
+  };
+}
+
+export interface ComponentsHero02 extends Schema.Component {
+  collectionName: 'components_components_hero02s';
+  info: {
+    displayName: 'Hero02';
+    icon: 'apps';
+  };
+  attributes: {
+    title: Attribute.String;
+    subtitle: Attribute.String;
+    description: Attribute.Text;
+    bigImage: Attribute.Media;
+    smallImage: Attribute.Media;
+  };
+}
+
+export interface ComponentsListFood extends Schema.Component {
+  collectionName: 'components_components_list_foods';
+  info: {
+    displayName: 'ListFood';
+    icon: 'bulletList';
+  };
+  attributes: {
+    title: Attribute.String;
+    subtitle: Attribute.String;
+    foods: Attribute.Relation<
+      'components.list-food',
+      'oneToMany',
+      'api::food.food'
+    >;
+  };
+}
+
+export interface ComponentsMenuPage extends Schema.Component {
+  collectionName: 'components_components_menu_pages';
+  info: {
+    displayName: 'MenuPage';
+    icon: 'calendar';
+  };
+  attributes: {
+    title: Attribute.String;
+    subtitle: Attribute.String;
+    food: Attribute.Relation<
+      'components.menu-page',
+      'oneToOne',
+      'api::food.food'
+    >;
+    background: Attribute.Media;
+  };
+}
+
+export interface ComponentsOpenHour extends Schema.Component {
+  collectionName: 'components_components_open_hours';
+  info: {
+    displayName: 'OpenHour';
+    icon: 'clock';
+  };
+  attributes: {
+    title: Attribute.String;
+    description: Attribute.Text;
+    openning_hour: Attribute.Relation<
+      'components.open-hour',
+      'oneToOne',
+      'api::openning-hour.openning-hour'
+    >;
+  };
+}
+
+export interface ComponentsOpenPage extends Schema.Component {
+  collectionName: 'components_components_open_pages';
+  info: {
+    displayName: 'OpenPage';
+    icon: 'discuss';
+  };
+  attributes: {
+    title: Attribute.String;
+    subtitle: Attribute.String;
+    background: Attribute.Media;
   };
 }
 
 declare module '@strapi/types' {
   export module Shared {
     export interface Components {
-      'components.button': ComponentsButton;
-      'components.food': ComponentsFood;
+      'components.about-chef': ComponentsAboutChef;
+      'components.hero01': ComponentsHero01;
+      'components.hero02': ComponentsHero02;
+      'components.list-food': ComponentsListFood;
+      'components.menu-page': ComponentsMenuPage;
+      'components.open-hour': ComponentsOpenHour;
+      'components.open-page': ComponentsOpenPage;
     }
   }
 }

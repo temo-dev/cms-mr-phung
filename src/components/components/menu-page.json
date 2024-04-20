@@ -1,0 +1,31 @@
+{
+  "collectionName": "components_components_menu_pages",
+  "info": {
+    "displayName": "MenuPage",
+    "icon": "calendar"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "subtitle": {
+      "type": "string"
+    },
+    "food": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::food.food"
+    },
+    "background": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": false
+    }
+  }
+}

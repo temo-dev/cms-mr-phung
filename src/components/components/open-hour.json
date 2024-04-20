@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_components_open_hours",
+  "info": {
+    "displayName": "OpenHour",
+    "icon": "clock"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "openning_hour": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::openning-hour.openning-hour"
+    }
+  }
+}
