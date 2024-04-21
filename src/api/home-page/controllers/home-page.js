@@ -53,7 +53,7 @@ module.exports = createCoreController('api::home-page.home-page', ({ strapi }) =
 
           // get components hero02
           const hero02 = await strapi.db.connection.raw(`
-          select cchs.id, title, description from components_components_hero02s cchs
+          select cchs.id, title, description, cchs.subtitle from components_components_hero02s cchs
           left join home_pages_components hpc on hpc.component_id = cchs.id
           left join home_pages hp on hp.id = hpc.entity_id where hpc.component_type = 'components.hero02' and hp.locale ='${dataHomePage[i].locale}';
           `)
