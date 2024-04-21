@@ -40,7 +40,7 @@ module.exports = createCoreController('api::home-page.home-page', ({ strapi }) =
 
           // get components hero01
           const hero01 = await strapi.db.connection.raw(`
-          select cchs.id, cchs.title, cchs.description,f.url from components_components_hero01s cchs
+          select cchs.id, cchs.title, cchs.description,f.url, cchs.subtitle from components_components_hero01s cchs
           left join home_pages_components hpc on hpc.component_id = cchs.id
           left join home_pages hp on hp.id = hpc.entity_id
           left join files_related_morphs frm on frm.related_id = cchs.id
