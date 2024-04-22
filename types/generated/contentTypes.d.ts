@@ -1159,7 +1159,7 @@ export interface ApiGalleryPageGalleryPage extends Schema.SingleType {
     };
   };
   attributes: {
-    Gallery: Attribute.DynamicZone<['components.list-food']> &
+    gallery: Attribute.DynamicZone<['components.list-food']> &
       Attribute.SetPluginOptions<{
         i18n: {
           localized: true;

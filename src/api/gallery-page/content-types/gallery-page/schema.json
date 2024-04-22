@@ -16,7 +16,7 @@
     }
   },
   "attributes": {
-    "Gallery": {
+    "gallery": {
       "pluginOptions": {
         "i18n": {
           "localized": true
