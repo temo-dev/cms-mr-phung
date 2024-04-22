@@ -20,9 +20,12 @@ module.exports = createCoreController('api::home-page.home-page', ({ strapi }) =
         for (let i = 0; i < dataHomePage.length; i++) {
           //get reviews
           const reviews = await strapi.db.connection.raw(`
-          select r.id, name, adress from reviews r
+          select r.id, r.name, r.adress, r.content, f2.url from reviews r
           left join home_pages_reviews_links hprl on hprl.review_id = r.id
-          left join home_pages hp on hp.id = hprl.home_page_id where hp.locale = '${dataHomePage[i].locale}';
+          left join home_pages hp on hp.id = hprl.home_page_id
+          left join files_related_morphs frm on frm.related_id = r.id
+          left join files f2 on f2.id = frm.file_id
+          where frm.related_type = 'api::review.review' and hp.locale = '${dataHomePage[i].locale}';
         `)
           if (reviews) {
             dataHomePage[i] = { ...dataHomePage[i], 'reviews': reviews.rows }
@@ -88,9 +91,11 @@ module.exports = createCoreController('api::home-page.home-page', ({ strapi }) =
             let listFood = dataHomePage[i].listFood
             for (let j = 0; j < listFood.length; j++) {
               const foods = await strapi.db.connection.raw(`
-            select f.id, name, description from foods f
+            select f.id, f.name, f.description, c.name as cuisine from foods f
             left join components_components_list_foods_foods_links cclffl on cclffl.food_id = f.id
             left join components_components_list_foods cclf on cclf.id = cclffl.list_food_id
+            left join foods_cuisine_links fcl on fcl.food_id = f.id
+            left join cuisines c on c.id = fcl.cuisine_id
             where cclf.id = '${listFood[j].id}'
             `)
               if (foods) {
