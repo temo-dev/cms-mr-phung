@@ -91,29 +91,19 @@ module.exports = createCoreController('api::home-page.home-page', ({ strapi }) =
             let listFood = dataHomePage[i].listFood
             for (let j = 0; j < listFood.length; j++) {
               const foods = await strapi.db.connection.raw(`
-            select f.id, f.name, f.description, c.name as cuisine from foods f
-            left join components_components_list_foods_foods_links cclffl on cclffl.food_id = f.id
-            left join components_components_list_foods cclf on cclf.id = cclffl.list_food_id
-            left join foods_cuisine_links fcl on fcl.food_id = f.id
-            left join cuisines c on c.id = fcl.cuisine_id
-            where cclf.id = '${listFood[j].id}'
+              select f.id,f.name, f.description, f.price, f.locale, f2.url as image, c.name as cuisine, hp.locale  from foods f
+              left join foods_cuisine_links fcl on fcl.food_id = f.id
+              left join cuisines c on c.id = fcl.cuisine_id
+              left join components_components_list_foods_foods_links cclffl on cclffl.food_id = f.id
+              left join components_components_list_foods cclf on cclf.id = cclffl.list_food_id
+              left join home_pages_components hpc on hpc.component_id = cclf.id
+              left join home_pages hp on hp.id = hpc.entity_id
+              left join files_related_morphs frm on frm.related_id = f.id
+              left join files f2 on f2.id = frm.file_id
+              where frm.related_type = 'api::food.food' and hpc.component_type = 'components.list-food'
             `)
               if (foods) {
                 dataHomePage[i].listFood[j] = { ...dataHomePage[i].listFood[j], 'foods': foods.rows }
-
-                let food = dataHomePage[i].listFood[j].foods
-                for (let k = 0; k < food.length; k++) {
-                  const media = await strapi.db.connection.raw(`
-                  select frm.related_id, field, url, size from foods f
-                  left join files_related_morphs frm on frm.related_id = f.id
-                  left join files f2 on f2.id = frm.file_id
-                  where frm.related_type = 'api::food.food' and f.id = '${food[k].id}'
-                  `)
-                  if (media) {
-                    dataHomePage[i].listFood[j].foods[k] = { ...dataHomePage[i].listFood[j].foods[k], 'media': media.rows }
-                  }
-                }
-
               }
 
             }
