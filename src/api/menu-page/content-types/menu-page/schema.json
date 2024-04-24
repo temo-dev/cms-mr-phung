@@ -24,7 +24,8 @@
       },
       "type": "dynamiczone",
       "components": [
-        "components.menu-page"
+        "components.menu-page",
+        "components.open-page"
       ]
     },
     "form": {

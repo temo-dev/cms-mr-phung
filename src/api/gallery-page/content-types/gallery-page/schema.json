@@ -24,7 +24,8 @@
       },
       "type": "dynamiczone",
       "components": [
-        "components.list-food"
+        "components.list-food",
+        "components.open-page"
       ]
     },
     "form": {

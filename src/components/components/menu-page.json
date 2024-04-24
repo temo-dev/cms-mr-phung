@@ -1,8 +1,9 @@
 {
   "collectionName": "components_components_menu_pages",
   "info": {
-    "displayName": "MenuPage",
-    "icon": "calendar"
+    "displayName": "MenuItem",
+    "icon": "calendar",
+    "description": ""
   },
   "options": {},
   "attributes": {
@@ -17,15 +18,16 @@
       "relation": "oneToOne",
       "target": "api::food.food"
     },
-    "background": {
+    "images": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
       "allowedTypes": [
         "images",
         "files",
         "videos",
         "audios"
-      ],
-      "type": "media",
-      "multiple": false
+      ]
     }
   }
 }

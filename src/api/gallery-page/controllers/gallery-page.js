@@ -55,6 +55,18 @@ module.exports = createCoreController('api::gallery-page.gallery-page', ({ strap
               }
             }
           }
+          //get openPage
+          const openPage = await strapi.db.connection.raw(`
+          select ccop.id, ccop.title , f.url as background, gp.locale from components_components_open_pages ccop
+          left join gallery_pages_components gpc on gpc.component_id = ccop.id
+          left join gallery_pages gp on gp.id = gpc.entity_id
+          left join files_related_morphs frm on frm.related_id = ccop.id
+          left join files f on f.id = frm.file_id
+          where gpc.component_type = 'components.open-page' and frm.related_type = 'components.open-page' and gp.locale ='${dataGalleryPages[i].locale}'
+          `)
+          if (openPage) {
+            dataGalleryPages[i] = { ...dataGalleryPages[i], 'openPage': openPage.rows }
+          }
         }
       }
       ctx.body = dataGalleryPages

@@ -63,8 +63,9 @@ export interface ComponentsListFood extends Schema.Component {
 export interface ComponentsMenuPage extends Schema.Component {
   collectionName: 'components_components_menu_pages';
   info: {
-    displayName: 'MenuPage';
+    displayName: 'MenuItem';
     icon: 'calendar';
+    description: '';
   };
   attributes: {
     title: Attribute.String;
@@ -74,7 +75,7 @@ export interface ComponentsMenuPage extends Schema.Component {
       'oneToOne',
       'api::food.food'
     >;
-    background: Attribute.Media;
+    images: Attribute.Media;
   };
 }
 

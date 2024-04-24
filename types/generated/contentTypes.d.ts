@@ -1159,7 +1159,9 @@ export interface ApiGalleryPageGalleryPage extends Schema.SingleType {
     };
   };
   attributes: {
-    gallery: Attribute.DynamicZone<['components.list-food']> &
+    gallery: Attribute.DynamicZone<
+      ['components.list-food', 'components.open-page']
+    > &
       Attribute.SetPluginOptions<{
         i18n: {
           localized: true;
@@ -1400,7 +1402,9 @@ export interface ApiMenuPageMenuPage extends Schema.SingleType {
     };
   };
   attributes: {
-    Menu: Attribute.DynamicZone<['components.menu-page']> &
+    Menu: Attribute.DynamicZone<
+      ['components.menu-page', 'components.open-page']
+    > &
       Attribute.SetPluginOptions<{
         i18n: {
           localized: true;
