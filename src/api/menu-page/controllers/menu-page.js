@@ -53,10 +53,12 @@ module.exports = createCoreController('api::menu-page.menu-page', ({ strapi }) =
             //get images
             for (let j = 0; j < dataMenu[i].menuItems.length; j++) {
               const images = await strapi.db.connection.raw(`
-            select f.url, f.id from files f
-            left join files_related_morphs frm on frm.file_id = f.id
-            left join components_components_menu_pages ccmp on ccmp.id = frm.related_id
-            where frm.related_type = 'components.menu-page' and ccmp.id = '${dataMenu[i].menuItems[j].id}'
+              select f.id, f.url from files f
+              left join files_related_morphs frm on frm.file_id = f.id
+              left join components_components_menu_pages ccmp on ccmp.id = frm.related_id
+              left join menu_pages_components mpc on mpc.component_id = ccmp.id
+              left join menu_pages mp on mp.id = mpc.entity_id
+              where frm.related_type = 'components.menu-page' and mpc.component_type = 'components.menu-page' and ccmp.id ='${dataMenu[i].menuItems[j].id}'
             `)
               if (images) {
                 dataMenu[i].menuItems[j] = { ...dataMenu[i].menuItems[j], "images": images.rows }
