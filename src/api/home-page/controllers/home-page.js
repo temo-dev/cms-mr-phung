@@ -25,7 +25,7 @@ module.exports = createCoreController('api::home-page.home-page', ({ strapi }) =
           left join home_pages hp on hp.id = hprl.home_page_id
           left join files_related_morphs frm on frm.related_id = r.id
           left join files f2 on f2.id = frm.file_id
-          where frm.related_type = 'api::review.review' and hp.locale = '${dataHomePage[i].locale}';
+          where frm.related_type = 'components.menu-page' and hp.locale = '${dataHomePage[i].locale}';
         `)
           if (reviews) {
             dataHomePage[i] = { ...dataHomePage[i], 'reviews': reviews.rows }
