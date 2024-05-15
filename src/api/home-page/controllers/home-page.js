@@ -121,20 +121,27 @@ module.exports = createCoreController('api::home-page.home-page', ({ strapi }) =
 
           if (openHour) {
             dataHomePage[i] = { ...dataHomePage[i], 'openHour': openHour.rows }
+
+            let array = dataHomePage[i].openHour
+            for (let j = 0; j < array.length; j++) {
+              const opentime = await strapi.db.connection.raw(`
+              select oh."date" , oh."time"  from openning_hours oh
+              left join components_components_open_hours_openning_hours_links ccohohl on ccohohl.openning_hour_id = oh.id
+              left join components_components_open_hours ccoh on ccoh.id = ccohohl.open_hour_id
+              left join home_pages_components hpc on hpc.component_id  = ccoh.id
+              left join home_pages hp on hp.id = hpc.entity_id
+              where hpc.component_type = 'components.open-hour' and hp.locale='${dataHomePage[i].locale}'
+              `)
+
+              if (opentime) {
+                dataHomePage[i].openHour[j] = { ...dataHomePage[i].openHour[j], "schedue": opentime.rows }
+              }
+
+            }
+
           }
 
-          const opentime = await strapi.db.connection.raw(`
-          select oh."date" , oh."time"  from openning_hours oh
-          left join components_components_open_hours_openning_hours_links ccohohl on ccohohl.openning_hour_id = oh.id
-          left join components_components_open_hours ccoh on ccoh.id = ccohohl.open_hour_id
-          left join home_pages_components hpc on hpc.component_id  = ccoh.id
-          left join home_pages hp on hp.id = hpc.entity_id
-          where hpc.component_type = 'components.open-hour' and hp.locale='${dataHomePage[i].locale}'
-          `)
 
-          if (opentime) {
-            dataHomePage[i].openHour = { ...dataHomePage[i].openHour, "schedue": opentime.rows }
-          }
 
         }//end-loop
       }
