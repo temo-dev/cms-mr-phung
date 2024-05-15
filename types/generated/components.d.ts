@@ -89,9 +89,9 @@ export interface ComponentsOpenHour extends Schema.Component {
   attributes: {
     title: Attribute.String;
     description: Attribute.Text;
-    openning_hour: Attribute.Relation<
+    openning_hours: Attribute.Relation<
       'components.open-hour',
-      'oneToOne',
+      'oneToMany',
       'api::openning-hour.openning-hour'
     >;
     background: Attribute.Media;

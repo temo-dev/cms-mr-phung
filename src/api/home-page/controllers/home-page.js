@@ -111,18 +111,29 @@ module.exports = createCoreController('api::home-page.home-page', ({ strapi }) =
 
           // get open hour
           const openHour = await strapi.db.connection.raw(`
-          select ccoh.id, ccoh.title, ccoh.description, oh.date, oh.time, oh.locale, f2.url  from components_components_open_hours ccoh
+          select ccoh.id, ccoh.title, ccoh.description, hp.locale, f.url from components_components_open_hours ccoh
           left join home_pages_components hpc on hpc.component_id = ccoh.id
           left join home_pages hp on hp.id = hpc.entity_id
-          left join components_components_open_hours_openning_hour_links ccohohl on ccohohl.open_hour_id = ccoh.id
-          left join openning_hours oh on oh.id = ccohohl.openning_hour_id
           left join files_related_morphs frm on frm.related_id = ccoh.id
-          left join files f2 on f2.id = frm.file_id
-          where hpc.component_type = 'components.open-hour' and hp.locale ='${dataHomePage[i].locale}' and frm.related_type = 'components.open-hour'
+          left join files f on f.id = frm.file_id
+          where hpc.component_type = 'components.open-hour' and frm.related_type ='components.open-hour' and hp.locale='${dataHomePage[i].locale}'
           `)
 
           if (openHour) {
             dataHomePage[i] = { ...dataHomePage[i], 'openHour': openHour.rows }
+          }
+
+          const opentime = await strapi.db.connection.raw(`
+          select oh."date" , oh."time"  from openning_hours oh
+          left join components_components_open_hours_openning_hours_links ccohohl on ccohohl.openning_hour_id = oh.id
+          left join components_components_open_hours ccoh on ccoh.id = ccohohl.open_hour_id
+          left join home_pages_components hpc on hpc.component_id  = ccoh.id
+          left join home_pages hp on hp.id = hpc.entity_id
+          where hpc.component_type = 'components.open-hour' and hp.locale='${dataHomePage[i].locale}'
+          `)
+
+          if (opentime) {
+            dataHomePage[i].openHour = { ...dataHomePage[i].openHour, "schedue": opentime.rows }
           }
 
         }//end-loop
